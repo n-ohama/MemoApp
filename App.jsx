@@ -1,52 +1,48 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AppBar from './src/components/AppBar';
-import MemoItem from './src/components/MemoItem';
+import { NavigationContainer } from '@react-navigation/native';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
+
+import AddScreen from './src/screens/AddScreen';
+import DetailScreen from './src/screens/DetailScreen';
+import EditScreen from './src/screens/EditScreen';
+import ListScreen from './src/screens/ListScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <AppBar />
-      <MemoItem />
-      <MemoItem />
-      <MemoItem />
-
-
-      <View style={styles.floatingBtn}>
-        <Text style={styles.label}>+</Text>
-      </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{
+          headerStyle: { backgroundColor: '#467fd3' },
+          headerTitleStyle: { color: '#fff' },
+          headerTitle: 'Memo App',
+          headerTintColor: '#fff',
+          headerBackTitle: 'Back',
+        }}
+      >
+        <Stack.Screen name="List" component={ListScreen} />
+        <Stack.Screen name="Detail" component={DetailScreen} />
+        <Stack.Screen name="Edit" component={EditScreen} />
+        <Stack.Screen name="Add" component={AddScreen} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+          }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f0f4f8',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-
-  floatingBtn: {
-    backgroundColor: '#467fdc',
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    right: 24,
-    bottom: 40,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: .25,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-
-  label: {
-    color: '#fff',
-    fontSize: 40,
-    lineHeight: 40,
-  }
-});
